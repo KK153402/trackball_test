@@ -1,0 +1,4 @@
+# USBサンプル共通の設定項目（VID/PID、製品名など）を使えるようにする
+source "samples/subsys/usb/common/Kconfig.sample_usbd"
+
+source "Kconfig.zephyr"

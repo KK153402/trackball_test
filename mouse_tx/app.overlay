@@ -1,0 +1,25 @@
+/*
+ * マウス側のピン割り当て（Hardware.md §2 と同じ配線）
+ *   PMW3610基板 J1-5 SCLK → D8 (P1.13)
+ *   PMW3610基板 J1-6 SDIO → D10(P1.15)
+ *   PMW3610基板 J1-7 MOT  → D2 (P0.28)
+ *   PMW3610基板 J1-8 NCS  → D3 (P0.29)
+ *   左クリック  D0 (P0.02) / 右クリック D1 (P0.03) / 中クリック D4 (P0.04)
+ *     → タクトスイッチの反対側はGND（内部プルアップ）。未接続でもOK
+ */
+/ {
+	zephyr,user {
+		sclk-gpios   = <&gpio1 13 GPIO_ACTIVE_HIGH>;
+		sdio-gpios   = <&gpio1 15 GPIO_ACTIVE_HIGH>;
+		ncs-gpios    = <&gpio0 29 GPIO_ACTIVE_HIGH>;
+		motion-gpios = <&gpio0 28 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+		btn-gpios    = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
+			       <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
+			       <&gpio0 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	};
+};
+
+/* D8/D9/D10 は標準でSPI2に割り当てられているが、今回はGPIOで直接使う */
+&spi2 {
+	status = "disabled";
+};

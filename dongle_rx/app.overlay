@@ -1,0 +1,10 @@
+/* USB HIDデバイス（マウス）の定義 */
+/ {
+	hid_dev_0: hid_dev_0 {
+		compatible = "zephyr,hid-device";
+		label = "HID0";
+		protocol-code = "none";
+		in-polling-period-us = <1000>;   /* 1ms周期（1000Hz） */
+		in-report-size = <64>;
+	};
+};
